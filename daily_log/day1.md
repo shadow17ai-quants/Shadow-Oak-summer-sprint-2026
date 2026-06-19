@@ -1,6 +1,6 @@
 # Day 1 — 19 June 2026
 
-**Hours:** 7
+**Hours:** 4
 
 **What I learned:**
 - Variables
