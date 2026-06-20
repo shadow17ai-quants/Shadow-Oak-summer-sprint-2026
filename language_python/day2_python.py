@@ -1,10 +1,9 @@
-# Day 2 - Conditionals & Loops
+# Day 2 - Conditionals, Loops, and Logic
 
 # ============================================
-# If Statements
+# If Statements & Comparison Operators
 # ============================================
 temperature = 35
-
 if temperature > 30:
     print("It's a hot day")
 elif temperature > 20:
@@ -14,12 +13,7 @@ elif temperature > 10:
 else:
     print("It's freezing")
 
-# ============================================
-# Comparison Operators
-# >, >=, <, <=, ==, !=
-# ============================================
 points = 85
-
 if points >= 90:
     print("Grade: A")
 elif points >= 80:
@@ -32,11 +26,10 @@ else:
     print("Grade: F")
 
 # ============================================
-# Logical Operators (and, or, not)
+# Logical Operators
 # ============================================
 income = 60000
 credit_score = 720
-
 if income > 50000 and credit_score > 700:
     print("Loan approved")
 elif income > 50000 or credit_score > 700:
@@ -44,12 +37,9 @@ elif income > 50000 or credit_score > 700:
 else:
     print("Loan denied")
 
-# ============================================
-# Weight Converter Program
-# ============================================
+# Weight Converter
 weight = float(input("Weight: "))
 unit = input("(K)g or (L)bs: ")
-
 if unit.upper() == "K":
     converted = weight * 2.20462
     print(f"{weight} kg = {converted:.2f} lbs")
@@ -58,8 +48,8 @@ elif unit.upper() == "L":
     print(f"{weight} lbs = {converted:.2f} kg")
 else:
     print("Invalid unit")
-    
-    # ============================================
+
+# ============================================
 # While Loops
 # ============================================
 i = 1
@@ -71,7 +61,6 @@ while i <= 5:
 secret = 9
 guess_count = 0
 guess_limit = 3
-
 while guess_count < guess_limit:
     guess = int(input("Guess: "))
     guess_count += 1
@@ -80,3 +69,52 @@ while guess_count < guess_limit:
         break
 else:
     print("You lose!")
+
+# ============================================
+# For Loops
+# ============================================
+for item in ["apple", "banana", "mango"]:
+    print(item)
+
+for number in range(5):
+    print(number)
+
+for number in range(2, 10, 2):
+    print(number)
+
+# ============================================
+# Nested Loops
+# ============================================
+for x in range(4):
+    for y in range(3):
+        print(f"({x}, {y})")
+
+# ============================================
+# Car Game
+# ============================================
+command = ""
+started = False
+while True:
+    command = input("> ").lower()
+    if command == "start":
+        if started:
+            print("Car is already started!")
+        else:
+            started = True
+            print("Car started...")
+    elif command == "stop":
+        if not started:
+            print("Car is already stopped!")
+        else:
+            started = False
+            print("Car stopped.")
+    elif command == "help":
+        print("""
+start - to start the car
+stop - to stop the car
+quit - to exit
+        """)
+    elif command == "quit":
+        break
+    else:
+        print("I don't understand that...")
