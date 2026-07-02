@@ -1,0 +1,6 @@
+Manual verification completed on 2026-07-02.
+Used first 10 days of Nifty data (after NaN).
+Hand-calculated Sharpe: X.XXX
+Code-calculated Sharpe: X.XXX
+Difference: X.XXX (within 0.001)
+Verification: PASSED
