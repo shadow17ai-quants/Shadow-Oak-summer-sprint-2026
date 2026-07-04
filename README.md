@@ -1,72 +1,65 @@
-# Shadow Oak Summer Sprint 2026
+# Shadow Oak Capitals
 
-**91‑day systematic quant research sprint**  
-19 June – 17 September 2026  
-Ryan Kaushal · Shadow Oak Capitals
+**Systematic Quantitative Hedge Fund** — *building Edge, Proof, Trust, and Capital.*
 
 ---
 
 ## The Mission
 
-Build a complete quantitative research platform from zero.  
-Deliver: 21 projects, 3 SSRN papers, and a live‑trading infrastructure.
+To launch a rules‑based, multi‑strategy fund targeting Indian equities, FX, commodities, fixed income, and global indices.
 
-No paid tools. No shortcuts. No excuses.
+No shortcuts. No paid tools. No overstatement.
 
 ---
 
 ## The Four Pillars
 
-| Pillar | Meaning |
-|--------|---------|
+| Pillar | Means |
+|--------|-------|
 | **Edge** | A documented, statistically verified reason the strategy makes money |
-| **Proof** | 24 months of live trading results, timestamped, independently verified |
+| **Proof** | 24 months of live, timestamped, auditable trading results |
 | **Trust** | 18+ SSRN papers + 50+ practitioner relationships |
 | **Capital** | £500,000 committed from independent LPs |
 
-**All four must be true before launch.**
+**All four must be simultaneously true before the first fund trade.**
 
 ---
 
-## The 5 Phases
+## The Path
 
-| Phase | Dates | Focus |
-|-------|-------|-------|
-| 1 — Semester 1 | 19 Jun – 21 Jul | Python, statistics, Git, Paper 1 |
-| 2 — Semester 2 (First Half) | 22 Jul – 12 Aug | SQL, backtesting engine, alpha signals |
-| 3 — S2 Second Half + Bootcamp 1 | 13 Aug – 27 Aug | Docker, NSE pipeline, Paper 2 |
-| 4 — Bootcamp 1 Hardening | 28 Aug – 6 Sep | pytest, live trades, Paper 2a |
-| 5 — V1 Upgrade | 7 Sep – 17 Sep | Streamlit journal, stats v1, full Dockerisation |
+A disciplined, phase‑gated build from zero to launch:
 
----
+- **Foundation** — Python, statistics, data pipelines  
+- **Backtesting** — event‑driven engine, alpha signals, hypothesis testing  
+- **Infrastructure** — Docker, PostgreSQL, NSE data at scale  
+- **Live trading** — real capital, adversarial testing, behavioural analytics  
 
-## Repository Structure
-.
-├── projects/ # Completed deliverables (S1‑P1 → S1‑P4)
-├── code/ # All source code
-├── daily_log/ # Daily entries (91 total)
-├── journals/ # Sunday journals (13 total)
-├── docs/ # Finance & stats reference
-└── papers/ # SSRN submissions
-
-text
+Every step maps directly to one of the four pillars.
 
 ---
 
-## The Rules
+## Stack
 
-- **Daily Git commit** — meaningful, descriptive
-- **Sunday journal** — handwritten, 7 questions
-- **No live trade before Adversarial Protocol** — all 4 sections complete
-- **Kill rule** — total losses capped at ₹5,000
-- **All four pillars simultaneously true** — non‑negotiable
+- Python · Pandas · NumPy · Matplotlib · Streamlit  
+- SQLite · PostgreSQL · psycopg2  
+- Docker · Pytest · Git  
+- yfinance · Plotly · SciPy · Statsmodels  
 
----
-
-## Philosophy
-
-> *"Nothing you build is practice. Every trade you place is real data. Every paper you publish is permanent capital. Now build."*
+All tools are free. No paid APIs. No paid compute.
 
 ---
 
-Proprietary · Shadow Oak Capitals
+## Guiding Rules
+
+- **Daily Git commit** — one meaningful push, every day.  
+- **Sunday journal** — handwritten, 7 questions, no excuses.  
+- **No live trade before Adversarial Protocol** — all four sections complete.  
+- **Kill rule** — total losses capped at ₹5,000. Stop when hit.  
+
+---
+
+> *"Nothing you build is practice. Every trade is real data. Every paper is permanent capital. Now build."*
+
+---
+
+Proprietary · Ryan Kaushal · Shadow Oak Capitals
