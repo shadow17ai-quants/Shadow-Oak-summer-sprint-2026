@@ -1,7 +1,10 @@
+*.db
+*.csv
+*.png
+*.txt
+nifty_metrics.txt
+finance_report_*.pdf
+nifty_50_data.csv
+nifty_50_price_chart.png
 __pycache__/
-*.py[cod]
-*.so
-venv/
-.env
-*.log
-.DS_Store
+*.pyc
