@@ -1,134 +1,72 @@
 # Shadow Oak Summer Sprint 2026
 
-**91‑day institutional‑grade quant research sprint**
-
-This repository contains all code, projects, papers, and journals for the **Shadow Oak Capitals – Summer Sprint 2026** – a systematic quantitative hedge fund incubator.
-
----
-
-## 📌 Overview
-
-- **Duration:** 19 June – 17 September 2026 (91 days)
-- **Goal:** Build a complete quant research platform with 21 projects, 3 SSRN papers, and a live‑trading infrastructure.
-- **Edge, Proof, Trust, Capital** – all four pillars must be satisfied before fund launch.
+**91‑day systematic quant research sprint**  
+19 June – 17 September 2026  
+Ryan Kaushal · Shadow Oak Capitals
 
 ---
 
-## 🗂️ Repository Structure
-├── code/ # All project code (organized by deliverable)
-├── daily_log/ # Daily logs (Day 1 – Day 91)
-├── journals/ # Sunday journals (Week 1 – Week 13)
-├── docs/ # Finance and statistics notes
-├── papers/ # SSRN paper drafts and final PDFs
-├── projects/ # Completed projects (SovereignFinance, NifftyVault, etc.)
-├── language_python/ # Learning scripts (Mosh, Corey, etc.)
-└── README.md # This file
+## The Mission
+
+Build a complete quantitative research platform from zero.  
+Deliver: 21 projects, 3 SSRN papers, and a live‑trading infrastructure.
+
+No paid tools. No shortcuts. No excuses.
+
+---
+
+## The Four Pillars
+
+| Pillar | Meaning |
+|--------|---------|
+| **Edge** | A documented, statistically verified reason the strategy makes money |
+| **Proof** | 24 months of live trading results, timestamped, independently verified |
+| **Trust** | 18+ SSRN papers + 50+ practitioner relationships |
+| **Capital** | £500,000 committed from independent LPs |
+
+**All four must be true before launch.**
+
+---
+
+## The 5 Phases
+
+| Phase | Dates | Focus |
+|-------|-------|-------|
+| 1 — Semester 1 | 19 Jun – 21 Jul | Python, statistics, Git, Paper 1 |
+| 2 — Semester 2 (First Half) | 22 Jul – 12 Aug | SQL, backtesting engine, alpha signals |
+| 3 — S2 Second Half + Bootcamp 1 | 13 Aug – 27 Aug | Docker, NSE pipeline, Paper 2 |
+| 4 — Bootcamp 1 Hardening | 28 Aug – 6 Sep | pytest, live trades, Paper 2a |
+| 5 — V1 Upgrade | 7 Sep – 17 Sep | Streamlit journal, stats v1, full Dockerisation |
+
+---
+
+## Repository Structure
+.
+├── projects/ # Completed deliverables (S1‑P1 → S1‑P4)
+├── code/ # All source code
+├── daily_log/ # Daily entries (91 total)
+├── journals/ # Sunday journals (13 total)
+├── docs/ # Finance & stats reference
+└── papers/ # SSRN submissions
 
 text
 
 ---
 
-## 📊 Completed Projects
+## The Rules
 
-| Project | Folder | Status |
-|---------|--------|--------|
-| **SovereignFinance** – Personal Finance Tracker (CLI + Web Dashboard) | `projects/sovereignfinance/` | ✅ |
-| **NifftyVault** – Nifty 50 Data Downloader & Analyzer (Sharpe, drawdown) | `projects/nifftyvault/` | ✅ |
-
----
-
-## 🔧 Setup
-
-### Prerequisites
-- Python 3.11+
-- PostgreSQL (for later phases)
-- Git
-
-### Installation
-
-```bash
-pip install -r requirements.txt
-Run a Project
-bash
-cd projects/sovereignfinance
-python cli.py
-Or launch the web dashboard:
-
-bash
-streamlit run projects/sovereignfinance/dashboard.py
-📈 Phase 1 Deliverables (July 4, 2026)
-Deliverable	Status
-Python fundamentals (Mosh Ep 1–12 + Corey OOP 1–4)	✅
-Git setup with 20+ commits	✅
-S1‑P1: Personal Finance Tracker (SQLite + PDF)	✅
-S1‑P2: Nifty 50 Data Downloader (Sharpe + drawdown)	✅
-Week 2 Sunday Journal	✅
-Paper 1 (SSRN submission)	🔴 In progress
-📝 License
-Proprietary – part of Shadow Oak Capitals Summer Sprint.
-
-Built by Ryan Kaushal – Shadow Oak Capitals
-"Nothing you build is practice."
-
-text
+- **Daily Git commit** — meaningful, descriptive
+- **Sunday journal** — handwritten, 7 questions
+- **No live trade before Adversarial Protocol** — all 4 sections complete
+- **Kill rule** — total losses capped at ₹5,000
+- **All four pillars simultaneously true** — non‑negotiable
 
 ---
 
-## 📁 Step 4: Create Finance Notes
+## Philosophy
 
-### File: `docs/finance_notes.md`
-
-```markdown
-# Finance Notes – Sharpe, Sortino, Calmar
-
-## Sharpe Ratio
-
-**Formula:**
-
-$$ \text{Sharpe} = \frac{R_p - R_f}{\sigma_p} $$
-
-- \( R_p \) = Portfolio return (annualised)
-- \( R_f \) = Risk‑free rate (often 0 for this sprint)
-- \( \sigma_p \) = Portfolio volatility (annualised)
-
-**Interpretation:**
-- Higher = better risk‑adjusted return.
-- A Sharpe > 1 is considered good.
-- Our Nifty 50 data showed Sharpe ≈ 0.73 (annualised, zero risk‑free).
+> *"Nothing you build is practice. Every trade you place is real data. Every paper you publish is permanent capital. Now build."*
 
 ---
 
-## Sortino Ratio
-
-**Formula:**
-
-$$ \text{Sortino} = \frac{R_p - R_f}{\sigma_d} $$
-
-- \( \sigma_d \) = Downside deviation (only negative returns)
-
-**Interpretation:**
-- Focuses on downside risk only, ignores upside volatility.
-- More relevant for asymmetric return distributions.
-
----
-
-## Calmar Ratio
-
-**Formula:**
-
-$$ \text{Calmar} = \frac{R_p}{\text{Max Drawdown}} $$
-
-- Max Drawdown = peak‑to‑trough decline
-
-**Interpretation:**
-- Higher is better.
-- Used to compare strategies based on worst‑case loss.
-
----
-
-## Annualisation
-
-- **Trading days per year:** 252 (used for equities)
-- **Annualised Return:** \( (1 + R_d)^{252} - 1 \)
-- **Annualised Volatility:** \( \sigma_d \times \sqrt{252} \)
-
+Proprietary · Shadow Oak Capitals
