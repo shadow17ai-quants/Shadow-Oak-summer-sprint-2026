@@ -2,7 +2,7 @@
 
 All notable changes to SovereignFinance will be documented in this file.
 
-## [Unreleased]
+## [1.0.0] - 2026-07-11
 ### Added
 - Comprehensive README with project overview, architecture, usage, and roadmap.
 - CONTRIBUTING.md guideline for contributors.
@@ -29,3 +29,5 @@ All notable changes to SovereignFinance will be documented in this file.
 - Basic test suite covering CLI, config, database, dashboard, and validation.
 - Requirements file (`requirements.txt`) with core dependencies.
 - Seed data script for quick demonstration.
+
+## [Unreleased]

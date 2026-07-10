@@ -35,7 +35,7 @@ DISPLAY_DATE_FORMAT: Final[str] = "%b %d, %Y"
 
 # Application metadata
 APP_NAME: Final[str] = "SovereignFinance"
-APP_VERSION: Final[str] = "0.1.0"
+APP_VERSION: Final[str] = "1.0.0"
 APP_DESCRIPTION: Final[str] = "Personal Finance Tracker for Shadow Oak Capitals"
 
 # PDF report configuration
