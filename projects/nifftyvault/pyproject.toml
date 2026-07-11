@@ -1,0 +1,8 @@
+# Configuration for ruff
+[tool.ruff]
+select = ["E", "F", "W", "C90", "I"]
+ignore = []
+line-length = 88
+target-version = "py311"
+# Per‑file ignores can be added here if needed
+# Example: per-file-ignores = { "__init__.py" = ["F401"] }
