@@ -1,0 +1,91 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oakledger"
+version = "0.1.0"
+description = "Trading journal for logging and analysing paper trades"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+authors = [
+    {name = "OakLedger Contributors"}
+]
+keywords = ["trading", "journal", "finance"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Financial and Insurance Industry",
+    "Topic :: Office/Business :: Financial",
+]
+
+# Runtime dependencies
+dependencies = [
+    "sqlite3",  # built-in, but we keep for completeness
+    "pandas>=2.0.0",
+]
+
+# Optional dependencies for development
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+    "mypy>=1.0",
+    "pre-commit>=3.0",
+]
+
+# Configuration for black
+[tool.black]
+line-length = 88
+target-version = ['py311']
+include = '\.py$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
+
+# Configuration for ruff
+[tool.ruff]
+select = ["E", "F", "W", "C90", "I"]
+ignore = []
+line-length = 88
+target-version = "py311"
+extend-ignore = ["E501"]  # already handled by line-length
+per-file-ignores = {
+    "__init__.py" = ["F401"]  # unused imports in __init__ are okay
+}
+
+# Configuration for pytest
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--strict-markers",
+    "--disable-warnings",
+]
+markers = [
+    "unit: mark unit tests",
+]
+
+# Configuration for mypy
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+ignore_missing_imports = true
+follow_imports = "silent"

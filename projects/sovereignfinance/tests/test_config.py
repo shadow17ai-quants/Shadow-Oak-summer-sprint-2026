@@ -81,7 +81,7 @@ def test_config_app_info():
     assert APP_NAME == "SovereignFinance"
 
     assert isinstance(APP_VERSION, str)
-    assert APP_VERSION == "0.1.0"
+    assert APP_VERSION == "1.0.0"
 
     assert isinstance(APP_DESCRIPTION, str)
     assert APP_DESCRIPTION == "Personal Finance Tracker for Shadow Oak Capitals"
