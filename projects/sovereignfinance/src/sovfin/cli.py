@@ -123,7 +123,7 @@ def view_all_transactions() -> None:
                 total_expense += abs(amount)
 
             # Format amount with color indicators (in terminal that supports it)
-            amount_str = f"{amount:,.2f}"
+            amount_str = f"₹{amount:,.2f}"
             print(
                 f"{t['id']:<4} "
                 f"{t['category']:<20} "
