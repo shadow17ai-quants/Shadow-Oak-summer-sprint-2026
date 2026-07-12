@@ -48,12 +48,10 @@ def test_seed_data_creates_tables_and_data():
             cursor = conn.cursor()
 
             # Check that transactions table exists
-            cursor.execute(
-                """
+            cursor.execute("""
                 SELECT name FROM sqlite_master
                 WHERE type='table' AND name='transactions'
-            """
-            )
+            """)
             result = cursor.fetchone()
             assert result is not None
             assert result[0] == "transactions"

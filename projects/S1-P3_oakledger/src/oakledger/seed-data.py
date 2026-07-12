@@ -12,8 +12,7 @@ random.seed(42)
 
 conn = sqlite3.connect(DB_PATH)
 c = conn.cursor()
-c.execute(
-    """CREATE TABLE IF NOT EXISTS trades (
+c.execute("""CREATE TABLE IF NOT EXISTS trades (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     trade_date TEXT NOT NULL,
     instrument TEXT NOT NULL,
@@ -25,8 +24,7 @@ c.execute(
     result REAL,
     signal_used TEXT,
     created_at TEXT DEFAULT (datetime('now'))
-)"""
-)
+)""")
 c.execute("DELETE FROM trades")
 
 instruments = [

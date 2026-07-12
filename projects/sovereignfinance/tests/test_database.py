@@ -41,12 +41,10 @@ def test_database_initialize_schema():
         # Before initialization, tables shouldn't exist
         with db.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute(
-                """
+            cursor.execute("""
                 SELECT name FROM sqlite_master
                 WHERE type='table' AND name='transactions'
-            """
-            )
+            """)
             result = cursor.fetchone()
             assert result is None  # Table doesn't exist yet
 
@@ -56,12 +54,10 @@ def test_database_initialize_schema():
         # After initialization, table should exist
         with db.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute(
-                """
+            cursor.execute("""
                 SELECT name FROM sqlite_master
                 WHERE type='table' AND name='transactions'
-            """
-            )
+            """)
             result = cursor.fetchone()
             assert result is not None
             assert result[0] == "transactions"

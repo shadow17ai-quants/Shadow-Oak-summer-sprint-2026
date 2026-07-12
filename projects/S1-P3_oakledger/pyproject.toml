@@ -38,12 +38,15 @@ select = ["E", "F", "W", "C90", "I"]
 ignore = []
 
 [tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["F401"]
+"src/oakledger/seed-data.py" = ["E501"]
+"src/oakledger/dashboard.py" = ["E501"]
+"src/oakledger/cli.py" = ["E501"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = ["-v", "--tb=short", "--strict-markers", "--disable-warnings"]
 
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.13"
 ignore_missing_imports = true
+disable_error_code = ["import-untyped"]

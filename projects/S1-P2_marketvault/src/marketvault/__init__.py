@@ -37,8 +37,8 @@ from .config import (
     DEFAULT_PERIOD_YEARS,
     DEFAULT_RISK_FREE_RATE,
     DEFAULT_TICKER,
-    MAX_PERIOD_YEARS,
     MIN_PERIOD_YEARS,
+    MAX_PERIOD_YEARS,
     TRADING_DAYS_PER_YEAR,
 )
 from .data import NiftyDataManager, download_nifty_50, load_nifty_50_data
@@ -70,8 +70,8 @@ __all__ = [
     "DEFAULT_DATA_FILE",
     "DEFAULT_METRICS_FILE",
     "DEFAULT_CHART_FILE",
-    MIN_PERIOD_YEARS,
-    MAX_PERIOD_YEARS,
+    "MIN_PERIOD_YEARS",
+    "MAX_PERIOD_YEARS",
     "DEFAULT_RISK_FREE_RATE",
     "CONFIDENCE_LEVEL",
     "CHART_FIGSIZE",

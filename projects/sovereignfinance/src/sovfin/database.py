@@ -7,7 +7,7 @@ import logging
 import sqlite3
 from contextlib import contextmanager
 from pathlib import Path
-from typing import Any, ContextManager, Dict, List, Optional
+from typing import Any, Dict, Iterator, List, Optional
 
 from sovfin.config import DATABASE_PATH, LOG_LEVEL
 
@@ -35,7 +35,7 @@ class Database:
         logger.debug(f"Database path: {self.db_path}")
 
     @contextmanager
-    def get_connection(self) -> ContextManager[sqlite3.Connection]:
+    def get_connection(self) -> Iterator[sqlite3.Connection]:
         """
         Context manager for database connections.
 
@@ -62,8 +62,7 @@ class Database:
         """Initialize the database schema if it doesn't exist."""
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute(
-                """
+            cursor.execute("""
                 CREATE TABLE IF NOT EXISTS transactions (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     category TEXT NOT NULL,
@@ -71,8 +70,7 @@ class Database:
                     date TEXT NOT NULL,
                     description TEXT
                 )
-            """
-            )
+            """)
             conn.commit()
             logger.info("Database schema initialized")
 
@@ -105,6 +103,8 @@ class Database:
             conn.commit()
             transaction_id = cursor.lastrowid
             logger.info(f"Transaction added with ID: {transaction_id}")
+            if transaction_id is None:
+                raise DatabaseError("Failed to retrieve transaction ID after insert")
             return transaction_id
 
     def get_all_transactions(self) -> List[Dict[str, Any]]:
@@ -116,13 +116,11 @@ class Database:
         """
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute(
-                """
+            cursor.execute("""
                 SELECT id, category, amount, date, description
                 FROM transactions
                 ORDER BY date
-            """
-            )
+            """)
             rows = cursor.fetchall()
 
             # Convert to list of dictionaries

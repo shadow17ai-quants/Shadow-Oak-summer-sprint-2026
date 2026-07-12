@@ -109,13 +109,11 @@ while True:
             started = False
             print("Car stopped.")
     elif command == "help":
-        print(
-            """
+        print("""
 start - to start the car
 stop - to stop the car
 quit - to exit
-        """
-        )
+        """)
     elif command == "quit":
         break
     else:

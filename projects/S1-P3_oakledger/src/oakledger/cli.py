@@ -18,8 +18,7 @@ def create_table():
     """Create the trades table if it does not exist."""
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute(
-        """
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS trades (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             trade_date TEXT NOT NULL,
@@ -33,8 +32,7 @@ def create_table():
             signal_used TEXT,
             created_at TEXT DEFAULT (datetime('now'))
         )
-    """
-    )
+    """)
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_trades_date ON trades(trade_date)")
     conn.commit()
     conn.close()

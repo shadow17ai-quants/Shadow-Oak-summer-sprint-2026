@@ -126,7 +126,8 @@ def monthly_returns(df: pd.DataFrame) -> pd.DataFrame:
         return pd.DataFrame(columns=["month", "pnl"])
     d["month"] = d["trade_date"].dt.to_period("M").astype(str)
     return (
-        d.groupby("month", as_index=False)["result"]
+        d.groupby("month")["result"]
         .sum()
+        .reset_index()
         .rename(columns={"result": "pnl"})
     )

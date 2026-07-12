@@ -30,8 +30,7 @@ def main():
 
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
-    cursor.execute(
-        """
+    cursor.execute("""
         CREATE TABLE IF NOT EXISTS transactions (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             category TEXT NOT NULL,
@@ -39,8 +38,7 @@ def main():
             date TEXT NOT NULL,
             description TEXT
         )
-        """
-    )
+        """)
     cursor.executemany(
         "INSERT INTO transactions (category, amount, date, description) VALUES (?, ?, ?, ?)",
         transactions,
