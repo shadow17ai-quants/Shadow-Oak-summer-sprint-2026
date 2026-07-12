@@ -5,7 +5,7 @@ Provides a command-line interface for logging and viewing trades.
 
 import sqlite3
 from datetime import datetime
-from .config import DB_PATH
+from oakledger.config import DB_PATH
 
 
 def get_connection():
@@ -62,7 +62,7 @@ def add_trade():
     )
     conn.commit()
     conn.close()
-    print("✅ Trade logged successfully!")
+    print(" Trade logged successfully!")
 
 
 def view_trades():
@@ -77,7 +77,7 @@ def view_trades():
         return
     print("\n=== ALL TRADES ===\n")
     for row in rows:
-        print(f"ID: {row[0]} | {row[1]} | {row[2]:<10} | {row[3]} | {row[4]} | ₹{row[5]:>8.2f} | {row[6]}")
+        print(f"ID: {row[0]} | {row[1]} | {row[2]:<10} | {row[3]} | {row[4]} | {row[5]:>8.2f} | {row[6]}")
 
 
 def main():

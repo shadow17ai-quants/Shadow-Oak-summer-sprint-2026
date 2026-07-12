@@ -1,5 +1,5 @@
 """
-OakLedger – Trading Journal
+OakLedger ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“ Trading Journal
 A simple trading journal for logging and analysing paper trades.
 """
 
@@ -11,12 +11,15 @@ __author__ = "Shadow Oak Capitals"
 __license__ = "MIT"
 
 # Import submodules to make them available at package level
-from . import analytics, cli, dashboard
+from oakledger import analytics, cli, dashboard
 
 # Key exports for easy access
-from .analytics import load_trades, compute_metrics, behavioral_metrics
-from .cli import main as cli_main
-from .dashboard import main as dashboard_main  # if we have a main function, but we may not
+from oakledger.analytics import load_trades, compute_metrics, behavioral_metrics
+from oakledger.cli import main as cli_main
+try:
+    from .dashboard import main as dashboard_main
+except ImportError:
+    dashboard_main = None
 
 # Define what gets imported with "from oakledger import *"
 __all__ = [

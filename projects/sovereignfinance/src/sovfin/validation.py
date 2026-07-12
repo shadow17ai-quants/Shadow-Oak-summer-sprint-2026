@@ -6,7 +6,7 @@ Handles input validation for transactions and other data.
 import re
 from datetime import datetime
 
-from .config import DATE_FORMAT
+from sovfin.config import DATE_FORMAT
 
 
 class ValidationError(Exception):

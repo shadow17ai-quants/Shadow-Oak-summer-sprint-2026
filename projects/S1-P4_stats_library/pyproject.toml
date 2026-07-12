@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "quant-stats"
+version = "0.1.0"
+description = "Financial Statistics Library v0.1 - Shadow Oak Capitals S1-P4"
+requires-python = ">=3.9"
+dependencies = ["numpy", "scipy", "statsmodels", "pandas"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

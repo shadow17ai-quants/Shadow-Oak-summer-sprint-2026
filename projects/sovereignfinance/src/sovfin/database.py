@@ -9,7 +9,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, ContextManager, Dict, List, Optional
 
-from .config import DATABASE_PATH, LOG_LEVEL
+from sovfin.config import DATABASE_PATH, LOG_LEVEL
 
 # Configure logger
 logger = logging.getLogger(__name__)

@@ -5,7 +5,7 @@ Contains functions for loading trade data and computing metrics.
 
 import sqlite3
 import pandas as pd
-from .config import DB_PATH
+from oakledger.config import DB_PATH
 
 def load_trades() -> pd.DataFrame:
     """Load all trades from the SQLite database."""

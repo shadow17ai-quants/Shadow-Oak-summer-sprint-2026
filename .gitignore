@@ -7,4 +7,9 @@ finance_report_*.pdf
 nifty_50_data.csv
 nifty_50_price_chart.png
 __pycache__/
-*.pyc
+*.pycvenv/
+.venv/
+1.venv/
+.pytest_cache/
+.ruff_cache/
+*.egg-info/

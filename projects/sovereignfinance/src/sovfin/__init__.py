@@ -1,6 +1,6 @@
 """SovereignFinance package."""
 
-from .config import APP_NAME, APP_VERSION
+from sovfin.config import APP_NAME, APP_VERSION
 
 __title__ = APP_NAME
 __version__ = APP_VERSION

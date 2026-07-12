@@ -5,7 +5,7 @@ Provides an interactive web interface for visualising and analysing trades.
 
 import streamlit as st
 import plotly.express as px
-from .analytics import load_trades, compute_metrics, behavioral_metrics
+from oakledger.analytics import load_trades, compute_metrics, behavioral_metrics
 
 st.set_page_config(page_title="OakLedger", page_icon="📒", layout="wide")
 st.sidebar.title("📒 OakLedger")
