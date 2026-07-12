@@ -18,14 +18,14 @@ for bad, good in repairs.items():
 text = re.sub(
     r'st\.markdown\(f"### \{choice\.upper\(\)\}.*?\{ticker\}"\)',
     'st.markdown(f"### {choice.upper()} - {ticker}")',
-    text
+    text,
 )
 
 # Nuke ANY mojibake rupee-sign variant by targeting the stable anchor around it
 text = re.sub(
     r'st\.caption\(f"Last close: .*?\{last_price:,\.2f\}',
     'st.caption(f"Last close: Rs {last_price:,.2f}',
-    text
+    text,
 )
 
 with open(path, "w", encoding="utf-8", newline="\n") as f:

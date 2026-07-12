@@ -1,5 +1,6 @@
 # language_python/list_analyzer.py
 
+
 def main():
     # 1. Ask the user for input
     user_input = input("Enter 5 numbers separated by commas (e.g. 10,20,30,40,50): ")
@@ -49,6 +50,7 @@ def main():
     print(f"Average = {avg_unpack:.2f}")
     print(f"Max = {max_unpack}")
     print(f"Min = {min_unpack}")
+
 
 if __name__ == "__main__":
     main()

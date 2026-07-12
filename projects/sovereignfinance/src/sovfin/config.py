@@ -54,7 +54,7 @@ MAX_AMOUNT_LIMIT: Final[float] = 1_000_000.0
 CHART_COLORS: Final[dict] = {
     "positive": "#2E8B57",  # Sea Green
     "negative": "#DC143C",  # Crimson
-    "neutral": "#4682B4",   # Steel Blue
-    "background": "#FFFFFF", # White
-    "grid": "#E0E0E0"       # Light Gray
+    "neutral": "#4682B4",  # Steel Blue
+    "background": "#FFFFFF",  # White
+    "grid": "#E0E0E0",  # Light Gray
 }

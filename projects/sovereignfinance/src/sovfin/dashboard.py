@@ -15,7 +15,6 @@ from sovfin.config import (
     APP_DESCRIPTION,
     APP_NAME,
     APP_VERSION,
-    CHART_COLORS,
     DISPLAY_DATE_FORMAT,
     LOG_FORMAT,
     LOG_LEVEL,
@@ -25,7 +24,9 @@ from sovfin.config import (
 )
 from sovfin.database import db
 
-logging.basicConfig(level=LOG_LEVEL, format=LOG_FORMAT, handlers=[logging.StreamHandler()])
+logging.basicConfig(
+    level=LOG_LEVEL, format=LOG_FORMAT, handlers=[logging.StreamHandler()]
+)
 logger = logging.getLogger(__name__)
 logger.info(f"{APP_NAME} dashboard v{APP_VERSION} starting up")
 
@@ -167,7 +168,10 @@ def metric_card(label: str, value: str, tone: str = "neutral") -> str:
 def main() -> None:
     with st.sidebar:
         st.markdown(f"### {APP_NAME}")
-        st.markdown(f'<div class="term-caption">{APP_DESCRIPTION} · v{APP_VERSION}</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="term-caption">{APP_DESCRIPTION} · v{APP_VERSION}</div>',
+            unsafe_allow_html=True,
+        )
         st.markdown("---")
         page = st.radio(
             "Navigate",
@@ -189,7 +193,10 @@ def main() -> None:
 
 def show_summary_page() -> None:
     st.title("Dashboard")
-    st.markdown('<div class="term-caption">Manage your transactions and financial goals</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="term-caption">Manage your transactions and financial goals</div>',
+        unsafe_allow_html=True,
+    )
 
     transactions = db.get_all_transactions()
     if not transactions:
@@ -207,13 +214,29 @@ def show_summary_page() -> None:
 
     col1, col2, col3, col4 = st.columns(4)
     with col1:
-        st.markdown(metric_card("Total Balance", f"₹{net_balance:,.2f}", "positive" if net_balance >= 0 else "negative"), unsafe_allow_html=True)
+        st.markdown(
+            metric_card(
+                "Total Balance",
+                f"₹{net_balance:,.2f}",
+                "positive" if net_balance >= 0 else "negative",
+            ),
+            unsafe_allow_html=True,
+        )
     with col2:
-        st.markdown(metric_card("Total Income", f"₹{total_income:,.2f}", "positive"), unsafe_allow_html=True)
+        st.markdown(
+            metric_card("Total Income", f"₹{total_income:,.2f}", "positive"),
+            unsafe_allow_html=True,
+        )
     with col3:
-        st.markdown(metric_card("Total Expense", f"₹{total_expense:,.2f}", "negative"), unsafe_allow_html=True)
+        st.markdown(
+            metric_card("Total Expense", f"₹{total_expense:,.2f}", "negative"),
+            unsafe_allow_html=True,
+        )
     with col4:
-        st.markdown(metric_card("Transactions", f"{transaction_count}", "neutral"), unsafe_allow_html=True)
+        st.markdown(
+            metric_card("Transactions", f"{transaction_count}", "neutral"),
+            unsafe_allow_html=True,
+        )
 
     st.markdown('<hr class="term-divider">', unsafe_allow_html=True)
 
@@ -224,7 +247,9 @@ def show_summary_page() -> None:
         df_sorted = df.sort_values("date_dt")
         df_sorted["cumulative_balance"] = df_sorted["amount"].cumsum()
         fig = px.area(df_sorted, x="date_dt", y="cumulative_balance")
-        fig.update_traces(line=dict(color="#8b5cf6", width=2), fillcolor="rgba(139,92,246,0.15)")
+        fig.update_traces(
+            line=dict(color="#8b5cf6", width=2), fillcolor="rgba(139,92,246,0.15)"
+        )
         fig.update_layout(**PLOTLY_DARK_LAYOUT, height=340, showlegend=False)
         st.plotly_chart(fig, use_container_width=True)
 
@@ -234,10 +259,25 @@ def show_summary_page() -> None:
         if not expense_df.empty:
             expense_df["amount"] = expense_df["amount"].abs()
             cat_totals = expense_df.groupby("category")["amount"].sum().reset_index()
-            fig2 = px.pie(cat_totals, names="category", values="amount", hole=0.65,
-                          color_discrete_sequence=["#8b5cf6", "#c084fc", "#fb7185", "#34d399", "#60a5fa"])
-            fig2.update_layout(**PLOTLY_DARK_LAYOUT, height=340, showlegend=True,
-                                legend=dict(orientation="h", y=-0.15))
+            fig2 = px.pie(
+                cat_totals,
+                names="category",
+                values="amount",
+                hole=0.65,
+                color_discrete_sequence=[
+                    "#8b5cf6",
+                    "#c084fc",
+                    "#fb7185",
+                    "#34d399",
+                    "#60a5fa",
+                ],
+            )
+            fig2.update_layout(
+                **PLOTLY_DARK_LAYOUT,
+                height=340,
+                showlegend=True,
+                legend=dict(orientation="h", y=-0.15),
+            )
             fig2.update_traces(textinfo="none")
             st.plotly_chart(fig2, use_container_width=True)
         else:
@@ -259,7 +299,10 @@ def show_summary_page() -> None:
 
 def show_transactions_page() -> None:
     st.title("All Transactions")
-    st.markdown('<div class="term-caption">Browse, search, and filter your transaction history</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="term-caption">Browse, search, and filter your transaction history</div>',
+        unsafe_allow_html=True,
+    )
 
     transactions = db.get_all_transactions()
     if not transactions:
@@ -272,16 +315,19 @@ def show_transactions_page() -> None:
 
     col1, col2 = st.columns([3, 1])
     with col1:
-        search_term = st.text_input("Search by category or description", placeholder="Enter search term...")
+        search_term = st.text_input(
+            "Search by category or description", placeholder="Enter search term..."
+        )
     with col2:
-        transaction_type = st.selectbox("Filter by type", ["All", "Income Only", "Expense Only"], index=0)
+        transaction_type = st.selectbox(
+            "Filter by type", ["All", "Income Only", "Expense Only"], index=0
+        )
 
     filtered_df = df.copy()
     if search_term:
-        mask = (
-            filtered_df["category"].str.contains(search_term, case=False, na=False)
-            | filtered_df["description"].str.contains(search_term, case=False, na=False)
-        )
+        mask = filtered_df["category"].str.contains(
+            search_term, case=False, na=False
+        ) | filtered_df["description"].str.contains(search_term, case=False, na=False)
         filtered_df = filtered_df[mask]
 
     if transaction_type == "Income Only":
@@ -295,13 +341,22 @@ def show_transactions_page() -> None:
         st.warning("No transactions match your search criteria.")
         return
 
-    st.markdown(f'<div class="term-caption">Showing {len(filtered_df)} of {len(df)} transactions</div>', unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="term-caption">Showing {len(filtered_df)} of {len(df)} transactions</div>',
+        unsafe_allow_html=True,
+    )
 
     display_df = filtered_df.copy()
     display_df["amount_formatted"] = display_df["amount"].apply(lambda x: f"₹{x:,.2f}")
-    display_df["date_formatted"] = display_df["date_dt"].dt.strftime(DISPLAY_DATE_FORMAT)
-    display_df["type"] = display_df["amount"].apply(lambda x: "Income" if x > 0 else "Expense")
-    display_df = display_df[["id", "category", "type", "amount_formatted", "date_formatted", "description"]]
+    display_df["date_formatted"] = display_df["date_dt"].dt.strftime(
+        DISPLAY_DATE_FORMAT
+    )
+    display_df["type"] = display_df["amount"].apply(
+        lambda x: "Income" if x > 0 else "Expense"
+    )
+    display_df = display_df[
+        ["id", "category", "type", "amount_formatted", "date_formatted", "description"]
+    ]
     display_df.columns = ["ID", "Category", "Type", "Amount", "Date", "Description"]
 
     st.dataframe(display_df, use_container_width=True, hide_index=True)
@@ -309,16 +364,36 @@ def show_transactions_page() -> None:
     st.markdown('<hr class="term-divider">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.markdown(metric_card("Filtered Income", f"₹{filtered_df[filtered_df['amount'] > 0]['amount'].sum():,.2f}", "positive"), unsafe_allow_html=True)
+        st.markdown(
+            metric_card(
+                "Filtered Income",
+                f"₹{filtered_df[filtered_df['amount'] > 0]['amount'].sum():,.2f}",
+                "positive",
+            ),
+            unsafe_allow_html=True,
+        )
     with col2:
-        st.markdown(metric_card("Filtered Expense", f"₹{abs(filtered_df[filtered_df['amount'] < 0]['amount'].sum()):,.2f}", "negative"), unsafe_allow_html=True)
+        st.markdown(
+            metric_card(
+                "Filtered Expense",
+                f"₹{abs(filtered_df[filtered_df['amount'] < 0]['amount'].sum()):,.2f}",
+                "negative",
+            ),
+            unsafe_allow_html=True,
+        )
     with col3:
-        st.markdown(metric_card("Filtered Count", f"{len(filtered_df)}", "neutral"), unsafe_allow_html=True)
+        st.markdown(
+            metric_card("Filtered Count", f"{len(filtered_df)}", "neutral"),
+            unsafe_allow_html=True,
+        )
 
 
 def show_charts_page() -> None:
     st.title("Financial Charts")
-    st.markdown('<div class="term-caption">Visualize income, expenses, and trends</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="term-caption">Visualize income, expenses, and trends</div>',
+        unsafe_allow_html=True,
+    )
 
     transactions = db.get_all_transactions()
     if not transactions:
@@ -344,14 +419,18 @@ def show_category_chart(df: pd.DataFrame) -> None:
     category_totals = category_totals.sort_values("amount", key=abs, ascending=False)
 
     fig = px.bar(
-        category_totals, x="category", y="amount",
+        category_totals,
+        x="category",
+        y="amount",
         labels={"amount": "Amount (₹)", "category": "Category"},
         color="amount",
         color_continuous_scale=[[0, "#fb7185"], [0.5, "#2a2645"], [1, "#8b5cf6"]],
         text="amount",
     )
     fig.update_traces(texttemplate="₹%{text:,.0f}", textposition="outside")
-    fig.update_layout(**PLOTLY_DARK_LAYOUT, xaxis_tickangle=-45, showlegend=False, height=500)
+    fig.update_layout(
+        **PLOTLY_DARK_LAYOUT, xaxis_tickangle=-45, showlegend=False, height=500
+    )
     fig.add_hline(y=0, line_dash="dash", line_color="#3a3660")
     st.plotly_chart(fig, use_container_width=True)
 
@@ -361,9 +440,15 @@ def show_cumulative_chart(df: pd.DataFrame) -> None:
     df_sorted = df.sort_values("date_dt")
     df_sorted["cumulative_balance"] = df_sorted["amount"].cumsum()
 
-    fig = px.area(df_sorted, x="date_dt", y="cumulative_balance",
-                  labels={"cumulative_balance": "Balance (₹)", "date_dt": "Date"})
-    fig.update_traces(line=dict(color="#8b5cf6", width=2), fillcolor="rgba(139,92,246,0.15)")
+    fig = px.area(
+        df_sorted,
+        x="date_dt",
+        y="cumulative_balance",
+        labels={"cumulative_balance": "Balance (₹)", "date_dt": "Date"},
+    )
+    fig.update_traces(
+        line=dict(color="#8b5cf6", width=2), fillcolor="rgba(139,92,246,0.15)"
+    )
     fig.update_layout(**PLOTLY_DARK_LAYOUT, xaxis_tickangle=-45, hovermode="x unified")
     fig.add_hline(y=0, line_dash="dash", line_color="#3a3660")
     st.plotly_chart(fig, use_container_width=True)
@@ -380,15 +465,38 @@ def show_monthly_trends_chart(df: pd.DataFrame) -> None:
     monthly_data["expense"] = monthly_data["amount"].clip(upper=0).abs()
 
     fig = go.Figure()
-    fig.add_trace(go.Bar(x=monthly_data["date_dt"], y=monthly_data["income"], name="Income", marker_color="#34d399"))
-    fig.add_trace(go.Bar(x=monthly_data["date_dt"], y=monthly_data["expense"], name="Expense", marker_color="#fb7185"))
-    fig.update_layout(**PLOTLY_DARK_LAYOUT, xaxis_title="Month", yaxis_title="Amount (₹)", barmode="group", xaxis_tickangle=-45)
+    fig.add_trace(
+        go.Bar(
+            x=monthly_data["date_dt"],
+            y=monthly_data["income"],
+            name="Income",
+            marker_color="#34d399",
+        )
+    )
+    fig.add_trace(
+        go.Bar(
+            x=monthly_data["date_dt"],
+            y=monthly_data["expense"],
+            name="Expense",
+            marker_color="#fb7185",
+        )
+    )
+    fig.update_layout(
+        **PLOTLY_DARK_LAYOUT,
+        xaxis_title="Month",
+        yaxis_title="Amount (₹)",
+        barmode="group",
+        xaxis_tickangle=-45,
+    )
     st.plotly_chart(fig, use_container_width=True)
 
 
 def show_add_transaction_page() -> None:
     st.title("Add New Transaction")
-    st.markdown('<div class="term-caption">Record a new income or expense</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="term-caption">Record a new income or expense</div>',
+        unsafe_allow_html=True,
+    )
 
     with st.form("add_transaction_form"):
         category = st.text_input("Category (e.g., Salary, Rent, Food)")
@@ -403,11 +511,15 @@ def show_add_transaction_page() -> None:
             if not category:
                 errors.append("Category is required.")
             elif len(category) > MAX_CATEGORY_LENGTH:
-                errors.append(f"Category must be under {MAX_CATEGORY_LENGTH} characters.")
+                errors.append(
+                    f"Category must be under {MAX_CATEGORY_LENGTH} characters."
+                )
             if amount <= 0 or amount > MAX_AMOUNT_LIMIT:
                 errors.append(f"Amount must be between 0 and {MAX_AMOUNT_LIMIT:,.0f}.")
             if description and len(description) > MAX_DESCRIPTION_LENGTH:
-                errors.append(f"Description must be under {MAX_DESCRIPTION_LENGTH} characters.")
+                errors.append(
+                    f"Description must be under {MAX_DESCRIPTION_LENGTH} characters."
+                )
 
             if errors:
                 for err in errors:
@@ -415,8 +527,12 @@ def show_add_transaction_page() -> None:
             else:
                 signed_amount = amount if txn_type == "Income" else -amount
                 try:
-                    db.add_transaction(category=category, amount=signed_amount,
-                                        date=date.strftime("%Y-%m-%d"), description=description)
+                    db.add_transaction(
+                        category=category,
+                        amount=signed_amount,
+                        date=date.strftime("%Y-%m-%d"),
+                        description=description,
+                    )
                     st.success("Transaction added successfully.")
                     logger.info(f"Transaction added: {category} ₹{signed_amount}")
                     st.rerun()
@@ -427,7 +543,10 @@ def show_add_transaction_page() -> None:
 
 def show_manage_page() -> None:
     st.title("Manage Transactions")
-    st.markdown('<div class="term-caption">Edit or delete existing transactions</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="term-caption">Edit or delete existing transactions</div>',
+        unsafe_allow_html=True,
+    )
 
     transactions = db.get_all_transactions()
     if not transactions:
@@ -440,7 +559,8 @@ def show_manage_page() -> None:
 
     txn_ids = df["id"].tolist()
     selected_id = st.selectbox(
-        "Select Transaction ID to Edit or Delete", txn_ids,
+        "Select Transaction ID to Edit or Delete",
+        txn_ids,
         format_func=lambda x: (
             f"ID {x} — {df[df['id']==x]['category'].iloc[0]}: "
             f"₹{df[df['id']==x]['amount'].iloc[0]:,.2f} on {df[df['id']==x]['date'].iloc[0]}"
@@ -457,7 +577,9 @@ def show_manage_page() -> None:
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("Delete this Transaction", use_container_width=True, type="secondary"):
+        if st.button(
+            "Delete this Transaction", use_container_width=True, type="secondary"
+        ):
             try:
                 success = db.delete_transaction(selected_id)
                 if success:
@@ -474,32 +596,50 @@ def show_manage_page() -> None:
         with st.expander("Edit this Transaction", expanded=False):
             with st.form("edit_transaction_form"):
                 edit_category = st.text_input("Category", value=row["category"])
-                edit_amount = st.number_input("Amount (₹)", value=abs(row["amount"]), min_value=0.01, step=100.0)
-                edit_type = st.radio("Transaction Type", ["Income", "Expense"],
-                                      index=0 if row["amount"] > 0 else 1, horizontal=True)
+                edit_amount = st.number_input(
+                    "Amount (₹)", value=abs(row["amount"]), min_value=0.01, step=100.0
+                )
+                edit_type = st.radio(
+                    "Transaction Type",
+                    ["Income", "Expense"],
+                    index=0 if row["amount"] > 0 else 1,
+                    horizontal=True,
+                )
                 edit_date = st.date_input("Date", value=pd.to_datetime(row["date"]))
-                edit_description = st.text_area("Description (optional)",
-                                                 value=row["description"] if row["description"] else "")
+                edit_description = st.text_area(
+                    "Description (optional)",
+                    value=row["description"] if row["description"] else "",
+                )
 
-                edit_submitted = st.form_submit_button("Update Transaction", use_container_width=True)
+                edit_submitted = st.form_submit_button(
+                    "Update Transaction", use_container_width=True
+                )
                 if edit_submitted:
                     errors = []
                     if not edit_category:
                         errors.append("Category is required.")
                     elif len(edit_category) > MAX_CATEGORY_LENGTH:
-                        errors.append(f"Category must be under {MAX_CATEGORY_LENGTH} characters.")
+                        errors.append(
+                            f"Category must be under {MAX_CATEGORY_LENGTH} characters."
+                        )
                     if edit_amount <= 0 or edit_amount > MAX_AMOUNT_LIMIT:
-                        errors.append(f"Amount must be between 0 and {MAX_AMOUNT_LIMIT:,.0f}.")
+                        errors.append(
+                            f"Amount must be between 0 and {MAX_AMOUNT_LIMIT:,.0f}."
+                        )
 
                     if errors:
                         for err in errors:
                             st.error(err)
                     else:
-                        signed_amount = edit_amount if edit_type == "Income" else -edit_amount
+                        signed_amount = (
+                            edit_amount if edit_type == "Income" else -edit_amount
+                        )
                         try:
                             success = db.update_transaction(
-                                transaction_id=selected_id, category=edit_category,
-                                amount=signed_amount, date=edit_date.strftime("%Y-%m-%d"),
+                                transaction_id=selected_id,
+                                category=edit_category,
+                                amount=signed_amount,
+                                date=edit_date.strftime("%Y-%m-%d"),
                                 description=edit_description,
                             )
                             if success:

@@ -1,16 +1,19 @@
 """
 Seed OakLedger with realistic dummy trades for dashboard testing.
 """
-import sqlite3
+
 import random
+import sqlite3
 from datetime import datetime, timedelta
+
 from oakledger.config import DB_PATH
 
 random.seed(42)
 
 conn = sqlite3.connect(DB_PATH)
 c = conn.cursor()
-c.execute("""CREATE TABLE IF NOT EXISTS trades (
+c.execute(
+    """CREATE TABLE IF NOT EXISTS trades (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     trade_date TEXT NOT NULL,
     instrument TEXT NOT NULL,
@@ -22,10 +25,20 @@ c.execute("""CREATE TABLE IF NOT EXISTS trades (
     result REAL,
     signal_used TEXT,
     created_at TEXT DEFAULT (datetime('now'))
-)""")
+)"""
+)
 c.execute("DELETE FROM trades")
 
-instruments = ["NIFTY 50", "RELIANCE", "HDFC BANK", "INFY", "TCS", "ICICI BANK", "SBIN", "AXIS BANK"]
+instruments = [
+    "NIFTY 50",
+    "RELIANCE",
+    "HDFC BANK",
+    "INFY",
+    "TCS",
+    "ICICI BANK",
+    "SBIN",
+    "AXIS BANK",
+]
 sides = ["BUY", "SELL"]
 signals = ["Momentum", "MeanRev", "Carry", "Breakout"]
 reasons_long = [
@@ -40,7 +53,9 @@ n_trades = 93  # matches "52 win / 41 loss" style reference
 start_date = datetime.today() - timedelta(days=150)
 
 for i in range(n_trades):
-    trade_date = (start_date + timedelta(days=random.randint(0, 150))).strftime("%Y-%m-%d")
+    trade_date = (start_date + timedelta(days=random.randint(0, 150))).strftime(
+        "%Y-%m-%d"
+    )
     instrument = random.choice(instruments)
     side = random.choice(sides)
     quantity = random.randint(1, 10)
@@ -56,8 +71,22 @@ for i in range(n_trades):
         result = round(-random.uniform(300, 6000), 2)
         reasoning_before = random.choice(reasons_long + reasons_short)
 
-    reasoning_after = "Target hit, closed per plan" if is_win else "Stopped out, reviewed setup"
-    trades.append((trade_date, instrument, side, quantity, price, reasoning_before, reasoning_after, result, signal))
+    reasoning_after = (
+        "Target hit, closed per plan" if is_win else "Stopped out, reviewed setup"
+    )
+    trades.append(
+        (
+            trade_date,
+            instrument,
+            side,
+            quantity,
+            price,
+            reasoning_before,
+            reasoning_after,
+            result,
+            signal,
+        )
+    )
 
 trades.sort(key=lambda t: t[0])
 

@@ -1,6 +1,6 @@
 ﻿import os
-import sqlite3
 import random
+import sqlite3
 from datetime import datetime, timedelta
 
 
@@ -13,13 +13,17 @@ def main():
     transactions = []
 
     for i in range(5):
-        date = (datetime.today() - timedelta(days=random.randint(1, 30))).strftime("%Y-%m-%d")
+        date = (datetime.today() - timedelta(days=random.randint(1, 30))).strftime(
+            "%Y-%m-%d"
+        )
         cat = random.choice(categories_income)
         amount = random.randint(2000, 60000)
         transactions.append((cat, amount, date, f"Auto {cat} {i+1}"))
 
     for i in range(10):
-        date = (datetime.today() - timedelta(days=random.randint(1, 30))).strftime("%Y-%m-%d")
+        date = (datetime.today() - timedelta(days=random.randint(1, 30))).strftime(
+            "%Y-%m-%d"
+        )
         cat = random.choice(categories_expense)
         amount = -random.randint(500, 12000)
         transactions.append((cat, amount, date, f"Auto {cat} {i+1}"))

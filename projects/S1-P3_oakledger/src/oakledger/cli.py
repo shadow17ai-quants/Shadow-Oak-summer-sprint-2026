@@ -5,6 +5,7 @@ Provides a command-line interface for logging and viewing trades.
 
 import sqlite3
 from datetime import datetime
+
 from oakledger.config import DB_PATH
 
 
@@ -17,7 +18,8 @@ def create_table():
     """Create the trades table if it does not exist."""
     conn = get_connection()
     cursor = conn.cursor()
-    cursor.execute("""
+    cursor.execute(
+        """
         CREATE TABLE IF NOT EXISTS trades (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             trade_date TEXT NOT NULL,
@@ -31,7 +33,8 @@ def create_table():
             signal_used TEXT,
             created_at TEXT DEFAULT (datetime('now'))
         )
-    """)
+    """
+    )
     cursor.execute("CREATE INDEX IF NOT EXISTS idx_trades_date ON trades(trade_date)")
     conn.commit()
     conn.close()
@@ -77,7 +80,9 @@ def view_trades():
         return
     print("\n=== ALL TRADES ===\n")
     for row in rows:
-        print(f"ID: {row[0]} | {row[1]} | {row[2]:<10} | {row[3]} | {row[4]} | {row[5]:>8.2f} | {row[6]}")
+        print(
+            f"ID: {row[0]} | {row[1]} | {row[2]:<10} | {row[3]} | {row[4]} | {row[5]:>8.2f} | {row[6]}"
+        )
 
 
 def main():

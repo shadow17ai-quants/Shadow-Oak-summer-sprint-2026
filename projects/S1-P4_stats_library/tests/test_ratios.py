@@ -1,6 +1,10 @@
 import numpy as np
 from quant_stats.ratios import (
-    sharpe_ratio, sortino_ratio, calmar_ratio, omega_ratio, max_drawdown,
+    sharpe_ratio,
+    sortino_ratio,
+    calmar_ratio,
+    omega_ratio,
+    max_drawdown,
 )
 
 

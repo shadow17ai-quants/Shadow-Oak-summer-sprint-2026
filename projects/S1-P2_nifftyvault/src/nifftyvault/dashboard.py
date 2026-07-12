@@ -1,6 +1,7 @@
 """
 Streamlit dashboard for NiftyVault — dark navy vault style.
 """
+
 import streamlit as st
 import plotly.graph_objects as go
 import pandas as pd
@@ -16,7 +17,8 @@ RED = "#f87171"
 TEXT = "#e8ebf7"
 MUTED = "#7d86ab"
 
-st.markdown(f"""
+st.markdown(
+    f"""
 <style>
 .stApp {{ background-color: {BG}; color: {TEXT}; }}
 [data-testid="stMetricValue"] {{ color: {TEXT}; font-size: 1.3rem; }}
@@ -24,7 +26,9 @@ st.markdown(f"""
 div[data-testid="stMetric"] {{ background-color: {CARD}; border-radius: 8px; padding: 12px 14px; }}
 section[data-testid="stSidebar"] {{ background-color: {CARD}; }}
 </style>
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 
 CSV_PATH = Path(__file__).resolve().parent.parent.parent / "data" / "nifty_50_data.csv"
 df = pd.read_csv(CSV_PATH, index_col=0, parse_dates=True)
@@ -40,7 +44,7 @@ st.markdown("### DASHBOARD")
 last = df.iloc[-1]
 week_chg = (df["price"].iloc[-1] / df["price"].iloc[-6] - 1) if len(df) > 6 else 0
 month_chg = (df["price"].iloc[-1] / df["price"].iloc[-22] - 1) if len(df) > 22 else 0
-year_chg = (df["price"].iloc[-1] / df["price"].iloc[0] - 1)
+year_chg = df["price"].iloc[-1] / df["price"].iloc[0] - 1
 
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("This Week", f"{week_chg:+.2%}")
@@ -53,21 +57,44 @@ col_price, col_right = st.columns([2, 1])
 
 with col_price:
     st.markdown("**ACCOUNT BALANCE — NIFTY 50 PRICE**")
-    fig = go.Figure(data=[go.Scatter(x=df.index, y=df["price"], mode="lines",
-                                      line=dict(color=BLUE, width=2), fill="tozeroy",
-                                      fillcolor="rgba(79,140,255,0.12)")])
-    fig.update_layout(paper_bgcolor=BG, plot_bgcolor=BG, font_color=TEXT, height=320,
-                       margin=dict(t=10, b=10, l=10, r=10),
-                       xaxis=dict(gridcolor="#232a45"), yaxis=dict(gridcolor="#232a45"))
+    fig = go.Figure(
+        data=[
+            go.Scatter(
+                x=df.index,
+                y=df["price"],
+                mode="lines",
+                line=dict(color=BLUE, width=2),
+                fill="tozeroy",
+                fillcolor="rgba(79,140,255,0.12)",
+            )
+        ]
+    )
+    fig.update_layout(
+        paper_bgcolor=BG,
+        plot_bgcolor=BG,
+        font_color=TEXT,
+        height=320,
+        margin=dict(t=10, b=10, l=10, r=10),
+        xaxis=dict(gridcolor="#232a45"),
+        yaxis=dict(gridcolor="#232a45"),
+    )
     st.plotly_chart(fig, use_container_width=True)
 
     st.markdown("**DAILY RETURNS**")
     recent = df.tail(60)
     colors = [GREEN if v >= 0 else RED for v in recent["return"].fillna(0)]
-    fig2 = go.Figure(data=[go.Bar(x=recent.index, y=recent["return"], marker_color=colors)])
-    fig2.update_layout(paper_bgcolor=BG, plot_bgcolor=BG, font_color=TEXT, height=220,
-                        margin=dict(t=10, b=10, l=10, r=10),
-                        xaxis=dict(gridcolor="#232a45"), yaxis=dict(gridcolor="#232a45", tickformat=".1%"))
+    fig2 = go.Figure(
+        data=[go.Bar(x=recent.index, y=recent["return"], marker_color=colors)]
+    )
+    fig2.update_layout(
+        paper_bgcolor=BG,
+        plot_bgcolor=BG,
+        font_color=TEXT,
+        height=220,
+        margin=dict(t=10, b=10, l=10, r=10),
+        xaxis=dict(gridcolor="#232a45"),
+        yaxis=dict(gridcolor="#232a45", tickformat=".1%"),
+    )
     st.plotly_chart(fig2, use_container_width=True)
 
 with col_right:
@@ -93,12 +120,23 @@ d["month"] = d.index.month
 monthly = d.groupby(["year", "month"])["price"].agg(["first", "last"])
 monthly["ret"] = monthly["last"] / monthly["first"] - 1
 pivot = monthly["ret"].unstack("month")
-fig3 = go.Figure(data=go.Heatmap(
-    z=pivot.values, x=[f"M{m}" for m in pivot.columns], y=[str(y) for y in pivot.index],
-    colorscale=[[0, RED], [0.5, "#1a2040"], [1, GREEN]], zmid=0,
-    text=[[f"{v:.1%}" if pd.notna(v) else "" for v in row] for row in pivot.values],
-    texttemplate="%{text}", showscale=False,
-))
-fig3.update_layout(paper_bgcolor=BG, plot_bgcolor=BG, font_color=TEXT, height=280,
-                    margin=dict(t=10, b=10, l=10, r=10))
+fig3 = go.Figure(
+    data=go.Heatmap(
+        z=pivot.values,
+        x=[f"M{m}" for m in pivot.columns],
+        y=[str(y) for y in pivot.index],
+        colorscale=[[0, RED], [0.5, "#1a2040"], [1, GREEN]],
+        zmid=0,
+        text=[[f"{v:.1%}" if pd.notna(v) else "" for v in row] for row in pivot.values],
+        texttemplate="%{text}",
+        showscale=False,
+    )
+)
+fig3.update_layout(
+    paper_bgcolor=BG,
+    plot_bgcolor=BG,
+    font_color=TEXT,
+    height=280,
+    margin=dict(t=10, b=10, l=10, r=10),
+)
 st.plotly_chart(fig3, use_container_width=True)

@@ -14,8 +14,9 @@ __license__ = "MIT"
 from oakledger import analytics, cli, dashboard
 
 # Key exports for easy access
-from oakledger.analytics import load_trades, compute_metrics, behavioral_metrics
+from oakledger.analytics import behavioral_metrics, compute_metrics, load_trades
 from oakledger.cli import main as cli_main
+
 try:
     from .dashboard import main as dashboard_main
 except ImportError:
@@ -29,20 +30,16 @@ __all__ = [
     "__version__",
     "__author__",
     "__license__",
-
     # Submodules
     "analytics",
     "cli",
     "dashboard",
-
     # Analytics
     "load_trades",
     "compute_metrics",
     "behavioral_metrics",
-
     # CLI
     "cli_main",
-
     # Dashboard (optional)
     # "dashboard_main",
 ]

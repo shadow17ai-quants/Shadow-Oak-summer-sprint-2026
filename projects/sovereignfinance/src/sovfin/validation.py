@@ -11,6 +11,7 @@ from sovfin.config import DATE_FORMAT
 
 class ValidationError(Exception):
     """Custom exception for validation errors."""
+
     pass
 
 
@@ -35,7 +36,7 @@ def validate_category(category: str) -> str:
         raise ValidationError("Category must be 50 characters or less")
 
     # Allow letters, numbers, spaces, and common punctuation
-    if not re.match(r'^[a-zA-Z0-9\s\-_.,&]+$', cleaned):
+    if not re.match(r"^[a-zA-Z0-9\s\-_.,&]+$", cleaned):
         raise ValidationError(
             "Category contains invalid characters. "
             "Only letters, numbers, spaces, hyphens, underscores, periods, commas, and ampersands are allowed."
@@ -124,8 +125,9 @@ def validate_description(description: str) -> str:
     return cleaned
 
 
-def validate_transaction_data(category: str, amount_str: str, date_str: str,
-                            description: str = "") -> tuple:
+def validate_transaction_data(
+    category: str, amount_str: str, date_str: str, description: str = ""
+) -> tuple:
     """
     Validate all transaction data at once.
 

@@ -2,8 +2,9 @@
 Tests for OakLedger analytics module.
 """
 
-from oakledger.analytics import load_trades, compute_metrics, behavioral_metrics
 import pandas as pd
+
+from oakledger.analytics import behavioral_metrics, compute_metrics, load_trades
 
 
 def test_load_trades_returns_dataframe():
@@ -15,7 +16,22 @@ def test_compute_metrics_returns_dict():
     df = load_trades()
     result = compute_metrics(df)
     assert isinstance(result, dict)
-    expected_keys = {"total_trades", "win_trades", "loss_trades", "win_rate", "loss_rate", "total_pnl", "avg_pnl", "avg_profit", "avg_loss", "max_profit", "max_loss", "sharpe_trades", "expectancy", "rr_ratio"}
+    expected_keys = {
+        "total_trades",
+        "win_trades",
+        "loss_trades",
+        "win_rate",
+        "loss_rate",
+        "total_pnl",
+        "avg_pnl",
+        "avg_profit",
+        "avg_loss",
+        "max_profit",
+        "max_loss",
+        "sharpe_trades",
+        "expectancy",
+        "rr_ratio",
+    }
     assert set(result.keys()) == expected_keys
 
 

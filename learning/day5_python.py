@@ -36,10 +36,12 @@ except Exception as e:
 
 print("\n===== RAISING EXCEPTIONS =====")
 
+
 def check_age(age):
     if age < 0:
         raise ValueError("Age cannot be negative!")
     print(f"Age is {age}")
+
 
 try:
     check_age(-5)

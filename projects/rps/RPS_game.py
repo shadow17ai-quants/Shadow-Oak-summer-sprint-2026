@@ -21,9 +21,11 @@ while True:
         result = "tie"
         score["tie"] += 1
         print("It's a tie!")
-    elif (user == "rock" and computer == "scissors") or \
-         (user == "scissors" and computer == "paper") or \
-         (user == "paper" and computer == "rock"):
+    elif (
+        (user == "rock" and computer == "scissors")
+        or (user == "scissors" and computer == "paper")
+        or (user == "paper" and computer == "rock")
+    ):
         result = "win"
         score["win"] += 1
         print("You win!")
@@ -32,4 +34,6 @@ while True:
         score["loss"] += 1
         print("You lose!")
 
-print(f"\nFinal Score: {score['win']} wins, {score['loss']} losses, {score['tie']} ties")
+print(
+    f"\nFinal Score: {score['win']} wins, {score['loss']} losses, {score['tie']} ties"
+)

@@ -2,13 +2,15 @@
 Tests for the seed_data script.
 """
 
+import importlib
 import os
+import sqlite3
 import sys
 import tempfile
 from pathlib import Path
-import sqlite3
+
 import pytest
-import importlib
+
 
 def test_seed_data_script_exists():
     """Test that the seed_data.py script exists."""
@@ -46,10 +48,12 @@ def test_seed_data_creates_tables_and_data():
             cursor = conn.cursor()
 
             # Check that transactions table exists
-            cursor.execute("""
+            cursor.execute(
+                """
                 SELECT name FROM sqlite_master
                 WHERE type='table' AND name='transactions'
-            """)
+            """
+            )
             result = cursor.fetchone()
             assert result is not None
             assert result[0] == "transactions"

@@ -18,6 +18,7 @@ logger.setLevel(LOG_LEVEL)
 
 class DatabaseError(Exception):
     """Custom exception for database-related errors."""
+
     pass
 
 
@@ -61,7 +62,8 @@ class Database:
         """Initialize the database schema if it doesn't exist."""
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("""
+            cursor.execute(
+                """
                 CREATE TABLE IF NOT EXISTS transactions (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     category TEXT NOT NULL,
@@ -69,12 +71,14 @@ class Database:
                     date TEXT NOT NULL,
                     description TEXT
                 )
-            """)
+            """
+            )
             conn.commit()
             logger.info("Database schema initialized")
 
-    def add_transaction(self, category: str, amount: float, date: str,
-                       description: str = "") -> int:
+    def add_transaction(
+        self, category: str, amount: float, date: str, description: str = ""
+    ) -> int:
         """
         Add a new transaction to the database.
 
@@ -91,10 +95,13 @@ class Database:
             DatabaseError: DatabaseError"""
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("""
+            cursor.execute(
+                """
                 INSERT INTO transactions (category, amount, date, description)
                 VALUES (?, ?, ?, ?)
-            """, (category, amount, date, description))
+            """,
+                (category, amount, date, description),
+            )
             conn.commit()
             transaction_id = cursor.lastrowid
             logger.info(f"Transaction added with ID: {transaction_id}")
@@ -109,11 +116,13 @@ class Database:
         """
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("""
+            cursor.execute(
+                """
                 SELECT id, category, amount, date, description
                 FROM transactions
                 ORDER BY date
-            """)
+            """
+            )
             rows = cursor.fetchall()
 
             # Convert to list of dictionaries
@@ -148,8 +157,14 @@ class Database:
                 logger.warning(f"No transaction found with ID: {transaction_id}")
                 return False
 
-    def update_transaction(self, transaction_id: int, category: str, amount: float,
-                          date: str, description: str = "") -> bool:
+    def update_transaction(
+        self,
+        transaction_id: int,
+        category: str,
+        amount: float,
+        date: str,
+        description: str = "",
+    ) -> bool:
         """
         Update an existing transaction.
 
@@ -165,11 +180,14 @@ class Database:
         """
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("""
+            cursor.execute(
+                """
                 UPDATE transactions
                 SET category = ?, amount = ?, date = ?, description = ?
                 WHERE id = ?
-            """, (category, amount, date, description, transaction_id))
+            """,
+                (category, amount, date, description, transaction_id),
+            )
             conn.commit()
             rows_affected = cursor.rowcount
 
@@ -192,11 +210,14 @@ class Database:
         """
         with self.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("""
+            cursor.execute(
+                """
                 SELECT id, category, amount, date, description
                 FROM transactions
                 WHERE id = ?
-            """, (transaction_id,))
+            """,
+                (transaction_id,),
+            )
             row = cursor.fetchone()
 
             if row:

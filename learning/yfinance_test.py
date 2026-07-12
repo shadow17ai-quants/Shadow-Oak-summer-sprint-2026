@@ -2,7 +2,6 @@
 # Testing yfinance – download Nifty 50 data
 
 import yfinance as yf
-import pandas as pd
 
 print("===== TESTING YFINANCE =====")
 

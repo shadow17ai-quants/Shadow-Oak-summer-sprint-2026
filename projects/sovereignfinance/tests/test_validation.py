@@ -2,21 +2,22 @@
 Tests for the validation module.
 """
 
-import pytest
-from datetime import datetime
-
 # Add src to path for imports
 import sys
+from datetime import datetime
 from pathlib import Path
+
+import pytest
+
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from sovfin.validation import (
-    validate_category,
+    ValidationError,
     validate_amount,
+    validate_category,
     validate_date,
     validate_description,
     validate_transaction_data,
-    ValidationError
 )
 
 
@@ -119,8 +120,7 @@ def test_validate_amount_invalid():
 
 
 def test_validate_date_valid():
-    """Test validation of valid dates.
-    """
+    """Test validation of valid dates."""
     # Test normal dates
     assert validate_date("2023-01-15") == "2023-01-15"
     assert validate_date("2023-12-31") == "2023-12-31"
@@ -193,7 +193,9 @@ def test_validate_description_valid():
 def test_validate_description_invalid():
     """Test validation of invalid descriptions."""
     # Test too long
-    with pytest.raises(ValidationError, match="Description must be 500 characters or less"):
+    with pytest.raises(
+        ValidationError, match="Description must be 500 characters or less"
+    ):
         validate_description("a" * 501)
 
 
@@ -203,7 +205,9 @@ def test_validate_transaction_data_valid():
     try:
         validate_transaction_data("Salary", "100.0", "2023-01-15", "Test")
     except Exception as e:
-        pytest.fail(f"validate_transaction_data raised {type(e).__name__} unexpectedly: {e}")
+        pytest.fail(
+            f"validate_transaction_data raised {type(e).__name__} unexpectedly: {e}"
+        )
 
 
 def test_validate_transaction_data_invalid_category():

@@ -79,4 +79,5 @@ def fat_tail_data():
 
 def stats_t_rvs(df, size, rng):
     from scipy import stats as scipy_stats
+
     return scipy_stats.t.rvs(df=df, size=size, random_state=rng) * 0.01

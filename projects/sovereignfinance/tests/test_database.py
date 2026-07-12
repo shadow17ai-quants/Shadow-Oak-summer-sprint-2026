@@ -2,17 +2,18 @@
 Tests for the database module.
 """
 
-import os
-import tempfile
-from pathlib import Path
 import sqlite3
-import pytest
 
 # Add src to path for imports
 import sys
+import tempfile
+from pathlib import Path
+
+import pytest
+
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from sovfin.database import Database, DatabaseError
+from sovfin.database import Database
 
 
 @pytest.fixture
@@ -40,10 +41,12 @@ def test_database_initialize_schema():
         # Before initialization, tables shouldn't exist
         with db.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("""
+            cursor.execute(
+                """
                 SELECT name FROM sqlite_master
                 WHERE type='table' AND name='transactions'
-            """)
+            """
+            )
             result = cursor.fetchone()
             assert result is None  # Table doesn't exist yet
 
@@ -53,10 +56,12 @@ def test_database_initialize_schema():
         # After initialization, table should exist
         with db.get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("""
+            cursor.execute(
+                """
                 SELECT name FROM sqlite_master
                 WHERE type='table' AND name='transactions'
-            """)
+            """
+            )
             result = cursor.fetchone()
             assert result is not None
             assert result[0] == "transactions"
@@ -90,7 +95,7 @@ def test_add_and_get_transaction(temp_db):
         category="Salary",
         amount=5000.0,
         date="2023-01-15",
-        description="Monthly salary"
+        description="Monthly salary",
     )
 
     # Verify it was added with the correct ID
@@ -150,10 +155,7 @@ def test_delete_transaction(temp_db):
     """Test deleting a transaction."""
     # Add a transaction
     transaction_id = temp_db.add_transaction(
-        category="Expense",
-        amount=-50.0,
-        date="2023-01-20",
-        description="Dinner out"
+        category="Expense", amount=-50.0, date="2023-01-20", description="Dinner out"
     )
 
     # Verify it exists
@@ -175,10 +177,7 @@ def test_update_transaction(temp_db):
     """Test updating a transaction."""
     # Add a transaction
     transaction_id = temp_db.add_transaction(
-        category="Food",
-        amount=-25.50,
-        date="2023-01-20",
-        description="Lunch at cafe"
+        category="Food", amount=-25.50, date="2023-01-20", description="Lunch at cafe"
     )
 
     # Update it
@@ -187,7 +186,7 @@ def test_update_transaction(temp_db):
         category="Groceries",
         amount=-75.25,
         date="2023-01-21",
-        description="Weekly groceries"
+        description="Weekly groceries",
     )
 
     # Verify update succeeded
@@ -207,7 +206,7 @@ def test_update_transaction(temp_db):
         category="Test",
         amount=10.0,
         date="2023-01-22",
-        description="Test"
+        description="Test",
     )
     assert result is False
 
@@ -236,7 +235,7 @@ def test_database_error_handling():
 
             # If we get here, the directory was created successfully
             assert db_path.parent.exists()
-        except Exception as e:
+        except Exception:
             # If there was an error, it should be a DatabaseError
             # Actually, the Database class creates directories automatically
             # so this shouldn't happen

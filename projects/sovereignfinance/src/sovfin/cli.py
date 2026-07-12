@@ -17,7 +17,7 @@ logging.basicConfig(
     format=LOG_FORMAT,
     handlers=[
         logging.StreamHandler(),  # Console output
-    ]
+    ],
 )
 logger = logging.getLogger(__name__)
 
@@ -26,15 +26,15 @@ logger.info(f"{APP_NAME} v{APP_VERSION} starting up")
 
 def display_menu() -> None:
     """Display the main menu options."""
-    print("\n" + "="*50)
+    print("\n" + "=" * 50)
     print(f"  {APP_NAME} v{APP_VERSION}")
-    print("="*50)
+    print("=" * 50)
     print("  1. Add Income")
     print("  2. Add Expense")
     print("  3. View All Transactions")
     print("  4. Generate PDF Report")
     print("  5. Exit")
-    print("-"*50)
+    print("-" * 50)
 
 
 def get_transaction_details(is_income: bool = True) -> tuple:
@@ -54,9 +54,7 @@ def get_transaction_details(is_income: bool = True) -> tuple:
         try:
             category = input("Category (e.g., Salary, Rent, Food): ").strip()
             amount_str = input("Amount (): ").strip()
-            date_str = input(
-                "Date (YYYY-MM-DD, press Enter for today): "
-            ).strip()
+            date_str = input("Date (YYYY-MM-DD, press Enter for today): ").strip()
             description = input("Description (optional): ").strip()
 
             # Validate all inputs
@@ -89,7 +87,9 @@ def add_transaction(is_income: bool = True) -> None:
     """
     try:
         category, amount, date, description = get_transaction_details(is_income)
-        transaction_id = db.add_transaction(category=category, amount=amount, date=date, description=description)
+        transaction_id = db.add_transaction(
+            category=category, amount=amount, date=date, description=description
+        )
         transaction_type = "Income" if is_income else "Expense"
         print(f" {transaction_type} added successfully! (ID: {transaction_id})")
         logger.info(f"{transaction_type} added: {category} | {amount:,.2f} | {date}")
@@ -108,15 +108,15 @@ def view_all_transactions() -> None:
             print("\n No transactions found.")
             return
 
-        print("\n" + "="*80)
+        print("\n" + "=" * 80)
         print(f"{'ID':<4} {'Category':<20} {'Amount':>12} {'Date':<12} {'Description'}")
-        print("-"*80)
+        print("-" * 80)
 
         total_income = 0.0
         total_expense = 0.0
 
         for t in transactions:
-            amount = t['amount']
+            amount = t["amount"]
             if amount >= 0:
                 total_income += amount
             else:
@@ -132,7 +132,7 @@ def view_all_transactions() -> None:
                 f"{t['description'] or ''}"
             )
 
-        print("="*80)
+        print("=" * 80)
         print(f"Total Income:  {total_income:,.2f}")
         print(f"Total Expense: {total_expense:,.2f}")
         print(f"Net Balance:   {total_income - total_expense:,.2f}")
@@ -170,9 +170,9 @@ def generate_pdf_report() -> None:
         running_balance = 0
 
         for t in transactions:
-            category = t['category']
-            amount = t['amount']
-            date = t['date']
+            category = t["category"]
+            amount = t["amount"]
+            date = t["date"]
 
             # Accumulate by category
             categories[category] = categories.get(category, 0) + amount
@@ -184,7 +184,7 @@ def generate_pdf_report() -> None:
 
         # Create figure with subplots
         fig, (ax1, ax2) = plt.subplots(2, 1, figsize=PDF_FIGSIZE)
-        fig.suptitle(f"{APP_NAME} Financial Report", fontsize=16, fontweight='bold')
+        fig.suptitle(f"{APP_NAME} Financial Report", fontsize=16, fontweight="bold")
 
         # ---- Bar chart: Income vs Expense by Category ----
         cats = list(categories.keys())
@@ -194,9 +194,9 @@ def generate_pdf_report() -> None:
             for x in amounts
         ]
 
-        bars = ax1.bar(cats, amounts, color=colors, edgecolor='black', linewidth=0.8)
-        ax1.axhline(y=0, color='black', linestyle='-', linewidth=0.8)
-        ax1.set_title("Income vs Expense by Category", fontsize=14, fontweight='bold')
+        bars = ax1.bar(cats, amounts, color=colors, edgecolor="black", linewidth=0.8)
+        ax1.axhline(y=0, color="black", linestyle="-", linewidth=0.8)
+        ax1.set_title("Income vs Expense by Category", fontsize=14, fontweight="bold")
         ax1.set_ylabel("Amount ()", fontsize=12)
         ax1.set_xlabel("Category", fontsize=12)
 
@@ -205,23 +205,32 @@ def generate_pdf_report() -> None:
             height = bar.get_height()
             label_y = height + (100 if height >= 0 else -300)
             ax1.text(
-                bar.get_x() + bar.get_width()/2,
+                bar.get_x() + bar.get_width() / 2,
                 label_y,
                 f"{amount:,.0f}",
-                ha='center', va='bottom' if height >= 0 else 'top',
-                fontsize=9, fontweight='bold'
+                ha="center",
+                va="bottom" if height >= 0 else "top",
+                fontsize=9,
+                fontweight="bold",
             )
 
-        ax1.tick_params(axis='x', rotation=45)
+        ax1.tick_params(axis="x", rotation=45)
 
         # ---- Line chart: Cumulative Balance ----
-        ax2.plot(dates, balances, marker='o', linestyle='-',
-                color=CHART_COLORS["neutral"], linewidth=2, markersize=4)
-        ax2.axhline(y=0, color='gray', linestyle='--', linewidth=0.8)
-        ax2.set_title("Cumulative Balance Over Time", fontsize=14, fontweight='bold')
+        ax2.plot(
+            dates,
+            balances,
+            marker="o",
+            linestyle="-",
+            color=CHART_COLORS["neutral"],
+            linewidth=2,
+            markersize=4,
+        )
+        ax2.axhline(y=0, color="gray", linestyle="--", linewidth=0.8)
+        ax2.set_title("Cumulative Balance Over Time", fontsize=14, fontweight="bold")
         ax2.set_xlabel("Date", fontsize=12)
         ax2.set_ylabel("Balance ()", fontsize=12)
-        ax2.tick_params(axis='x', rotation=45)
+        ax2.tick_params(axis="x", rotation=45)
         ax2.grid(True, alpha=0.3)
 
         plt.tight_layout()
@@ -231,7 +240,7 @@ def generate_pdf_report() -> None:
         pdf_filename = PDF_FILENAME_PATTERN.format(timestamp=timestamp)
         pdf_path = PDF_REPORT_DIR / pdf_filename
 
-        plt.savefig(pdf_path, dpi=PDF_DPI, bbox_inches='tight', facecolor='white')
+        plt.savefig(pdf_path, dpi=PDF_DPI, bbox_inches="tight", facecolor="white")
         plt.close(fig)
 
         print("\n PDF report generated successfully!")

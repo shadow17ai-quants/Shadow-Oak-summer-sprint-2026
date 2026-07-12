@@ -1,6 +1,10 @@
 ﻿import numpy as np
 from quant_stats.hypothesis_tests import (
-    jarque_bera_test, shapiro_wilk_test, ljung_box_test, adf_test, fit_student_t,
+    jarque_bera_test,
+    shapiro_wilk_test,
+    ljung_box_test,
+    adf_test,
+    fit_student_t,
 )
 
 
@@ -41,7 +45,10 @@ def test_ljung_box_autocorrelated(autocorrelated_data):
 def test_adf_stationary_series(stationary_data):
     result = adf_test(stationary_data)
     assert result["p_value"] < 0.05
-    assert "stationary" in result["interpretation"] and "NOT" not in result["interpretation"]
+    assert (
+        "stationary" in result["interpretation"]
+        and "NOT" not in result["interpretation"]
+    )
 
 
 def test_adf_random_walk(random_walk_data):

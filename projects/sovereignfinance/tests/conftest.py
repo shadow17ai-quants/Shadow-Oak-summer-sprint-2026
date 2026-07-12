@@ -2,9 +2,10 @@
 Shared test configuration and fixtures.
 """
 
-import pytest
 import sys
 from pathlib import Path
+
+import pytest
 
 # Add src to path for all tests
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
@@ -17,7 +18,7 @@ def sample_transaction_data():
         "category": "Salary",
         "amount": 5000.0,
         "date": "2023-01-15",
-        "description": "Monthly salary"
+        "description": "Monthly salary",
     }
 
 
@@ -28,15 +29,25 @@ def sample_expense_data():
         "category": "Food",
         "amount": -25.50,
         "date": "2023-01-16",
-        "description": "Lunch at restaurant"
+        "description": "Lunch at restaurant",
     }
 
 
 @pytest.fixture
 def valid_categories():
     """Provide list of valid categories for testing."""
-    return ["Salary", "Freelance", "Bonus", "Dividend", "Refund",
-            "Rent", "Food", "Transport", "Entertainment", "Utilities"]
+    return [
+        "Salary",
+        "Freelance",
+        "Bonus",
+        "Dividend",
+        "Refund",
+        "Rent",
+        "Food",
+        "Transport",
+        "Entertainment",
+        "Utilities",
+    ]
 
 
 @pytest.fixture

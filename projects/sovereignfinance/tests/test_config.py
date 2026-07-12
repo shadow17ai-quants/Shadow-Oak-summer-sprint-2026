@@ -3,22 +3,37 @@ Tests for SovereignFinance configuration module.
 """
 
 import os
-import pytest
-from pathlib import Path
 
 # Add src to path for imports
 import sys
+from pathlib import Path
+
+import pytest
+
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from sovfin.config import (
-    PROJECT_ROOT, DATA_DIR, LOGS_DIR,
-    DATABASE_NAME, DATABASE_PATH,
-    LOG_LEVEL, LOG_FORMAT, LOG_FILE,
-    DATE_FORMAT, DISPLAY_DATE_FORMAT,
-    APP_NAME, APP_VERSION, APP_DESCRIPTION,
-    PDF_REPORT_DIR, PDF_FILENAME_PATTERN, PDF_DPI, PDF_FIGSIZE,
-    MAX_CATEGORY_LENGTH, MAX_DESCRIPTION_LENGTH, MAX_AMOUNT_LIMIT,
-    CHART_COLORS
+    APP_DESCRIPTION,
+    APP_NAME,
+    APP_VERSION,
+    CHART_COLORS,
+    DATA_DIR,
+    DATABASE_NAME,
+    DATABASE_PATH,
+    DATE_FORMAT,
+    DISPLAY_DATE_FORMAT,
+    LOG_FILE,
+    LOG_FORMAT,
+    LOG_LEVEL,
+    LOGS_DIR,
+    MAX_AMOUNT_LIMIT,
+    MAX_CATEGORY_LENGTH,
+    MAX_DESCRIPTION_LENGTH,
+    PDF_DPI,
+    PDF_FIGSIZE,
+    PDF_FILENAME_PATTERN,
+    PDF_REPORT_DIR,
+    PROJECT_ROOT,
 )
 
 
@@ -127,10 +142,13 @@ def test_config_chart_colors():
 
     # Check that they are valid hex colors
     import re
-    hex_color_pattern = re.compile(r'^#[0-9A-Fa-f]{6}$')
+
+    hex_color_pattern = re.compile(r"^#[0-9A-Fa-f]{6}$")
     for color_name, color_value in CHART_COLORS.items():
         assert isinstance(color_value, str)
-        assert hex_color_pattern.match(color_value), f"Invalid color for {color_name}: {color_value}"
+        assert hex_color_pattern.match(
+            color_value
+        ), f"Invalid color for {color_name}: {color_value}"
 
 
 def test_environment_variable_override():
@@ -144,7 +162,9 @@ def test_environment_variable_override():
 
         # Reload the module to pick up the new environment variable
         import importlib
+
         import sovfin.config
+
         importlib.reload(sovfin.config)
 
         # Check that the new value was used
@@ -159,7 +179,9 @@ def test_environment_variable_override():
 
         # Reload again to restore original settings
         import importlib
+
         import sovfin.config
+
         importlib.reload(sovfin.config)
 
 
