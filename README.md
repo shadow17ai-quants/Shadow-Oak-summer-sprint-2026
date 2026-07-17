@@ -36,7 +36,7 @@ Smaller practice projects built along the way: [`calculator`](projects/calculato
 
 ## Outputs
 
-- Paper 1: *Building a Quantitative Data Pipeline for Nifty 50 Analysis* (SSRN ID: 7056338)
+- Paper 1: *Building a Quantitative Data Pipeline 
 - Paper 2: *Data Quality as Alpha Destruction*
 - 7 completed projects: Finance Tracker, Data Downloader, Trading Journal, Stats Library, etc.
 
